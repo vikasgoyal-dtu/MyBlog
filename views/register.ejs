@@ -1,0 +1,36 @@
+<%- include("partials/loginHeader"); -%>
+
+<div class=" container jumbotron jumbotron-fluid">
+    <div class="container-fluid col-md-8 col-sm-6 col-xl-4 col-xxl-4 col-lg-6 mt-2 mt-sm-2">
+        <form action="/register" method="post">
+
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+                <input type="text" id="form2Example1" name="username" class="form-control" placeholder="Enter username"
+                    required />
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <input type="password" id="form2Example1" name="password" class="form-control"
+                    placeholder="Enter Password" required />
+            </div>
+
+            <!-- Register button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+
+            <!-- Register buttons with social platform -->
+            <div class="text-center">
+                <p>Already a member? <a href="/login">Login</a> or <a href="/skip">Skip</a></p>
+                <p>or sign up with:</p>
+
+                <!-- Regiter with google -->
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-google mx-1"></i> <a href="/auth/google"> Sign in with google</a>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer"); -%>

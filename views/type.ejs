@@ -1,0 +1,59 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+            <a class="p-2 text-muted" href="/World">World</a>
+            <a class="p-2 text-muted" href="/India">India</a>
+            <a class="p-2 text-muted" href="/Technology">Technology</a>
+            <a class="p-2 text-muted" href="/Design">Design</a>
+            <a class="p-2 text-muted" href="/Culture">Culture</a>
+            <a class="p-2 text-muted" href="/Business">Business</a>
+            <a class="p-2 text-muted" href="/Politics">Politics</a>
+            <a class="p-2 text-muted" href="/Opinion">Opinion</a>
+            <a class="p-2 text-muted" href="/Science">Science</a>
+            <a class="p-2 text-muted" href="/Health">Health</a>
+            <a class="p-2 text-muted" href="/Style">Style</a>
+            <a class="p-2 text-muted" href="/Travel">Travel</a>
+            <!-- <a class="p-2 text-muted" href="/All">All</a> -->
+            <a class="p-2 text-muted" href="/Find">Find</a>
+            <a class="p-2 text-muted" href="/Mine">Mine</a>
+        </nav>
+    </div>
+</div>
+
+<!-- <div class="container">
+</div> -->
+
+<div class=" container jumbotron jumbotron-fluid">
+    <div class="container-fluid col-md-8 col-sm-6 col-xl-8 col-xxl-8 col-lg-8">
+        <h1 class="text-center" style="font-size: 1.8rem;"><%= title %></h1>
+        <ul class="list-group">
+            <% if(found.length === 0) { %>
+            <p>No blogs till now</p>
+            <%} else {%>
+            <% for (let i = found.length-1; i >= 0; i--) { %>
+            <form action="/delete" method="post">
+                <li class="list-group-item"><a href="/post/<%= found[i].title %>"><%= found[i].title %></a>
+                    <span style="font-size: 0.8rem;">
+                        <span class="text-success">#<%= found[i].type %></span>
+                        <%  if(!mine){ %>
+                        <span class="text-primary">@<%= found[i].username %></span>
+                        <% } %>
+                        <%= found[i].date %>
+                        <% if(title === "Your Activity") { %>
+                        <input type="hidden" name="title" value="<%= title %>">
+                        <input type="hidden" name="blog" value="<%= found[i].title %>">
+                        <button class="btn btn-sm shadow-none float-right" type="submit" name="deleteID"
+                            value="<%= found[i]._id %>"><i class="fa-solid fa-trash"></i></button>
+                        <% } %>
+                    </span>
+                </li>
+            </form>
+            <% } %>
+            <%}%>
+        </ul>
+    </div>
+</div>
+
+<%- include("partials/footer"); -%>

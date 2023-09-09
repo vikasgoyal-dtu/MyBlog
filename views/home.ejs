@@ -1,0 +1,100 @@
+<%- include("partials/header"); -%>
+<div class="container">
+    <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+            <a class="p-2 text-muted" href="/World">World</a>
+            <a class="p-2 text-muted" href="/India">India</a>
+            <a class="p-2 text-muted" href="/Technology">Technology</a>
+            <a class="p-2 text-muted" href="/Design">Design</a>
+            <a class="p-2 text-muted" href="/Culture">Culture</a>
+            <a class="p-2 text-muted" href="/Business">Business</a>
+            <a class="p-2 text-muted" href="/Politics">Politics</a>
+            <a class="p-2 text-muted" href="/Opinion">Opinion</a>
+            <a class="p-2 text-muted" href="/Science">Science</a>
+            <a class="p-2 text-muted" href="/Health">Health</a>
+            <a class="p-2 text-muted" href="/Style">Style</a>
+            <!-- <a class="p-2 text-muted" href="/All">All</a> -->
+            <a class="p-2 text-muted" href="/Find">Find</a>
+            <a class="p-2 text-muted" href="/Mine">Mine</a>
+        </nav>
+    </div>
+    <div class="jumbotron">
+        <h1 class="display-5">Unleash Your Passion for writing at our Blog Platform...</h1>
+        <p class="lead"></p>
+        <hr class="my-4">
+        <p>
+            Welcome to our cutting-edge blog platform powered by Express, MongoDB, Node.js, and EJS. With secure
+            authentication, CRUD operations, and categorized blogs, we offer tech enthusiasts an immersive experience.
+        </p>
+        <p>Create an account to manage your personalized profile and engage with fellow users. Our user-friendly
+            interface enables effortless content creation and organization. Leveraging Express.js for APIs, MongoDB for
+            flexible data storage, Node.js for real-time interactions, and EJS for dynamic web pages, we provide a fast
+            and scalable platform. Join our thriving tech community today to explore, share, and connect with
+            like-minded individuals in the exciting world of technology. Start blogging with us now! </p>
+        </p>
+        <!-- <a class="btn btn-primary btn-lg" href="/about" role="button">About Me</a> -->
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div id="start" class="col-sm-8 mb-5">
+            <div class="top">
+                <h1 id="startOverHere">Start Over here...</h1>
+                <hr>
+                <p><%=homeStartingContent%></p>
+            </div>
+            <div class="post">
+                <% let i %>
+                <% for (i = posts.length-1; i >= posts.length-5 && i >= 0; i--) { %>
+                <h4 id="#"><%= posts[i].title %></h4>
+                <p style="font-size: 0.8rem;" class="lead"><%= posts[i].date %></p>
+                <p> <%= posts[i].content.substring(0, 150) %> <a href="/post/<%= posts[i].title %>">Read more...</a></p>
+                <% } %>
+            </div>
+        </div>
+        <div class=" sidebar col-sm-4 mb-5">
+            <!-- <a href="/stories" class="text-decoration-none"><button type="button"
+                    class="btn btn-primary btn-lg btn-block">Stories</button></a> -->
+            <h1 id="events">Recent Blogs</h1>
+            <hr>
+            <div class="post">
+                <% for (i = posts.length-1; i >= posts.length-15 && i >= 0; i--) { %>
+                <a href="/post/<%= posts[i].title %>" class="text-decoration-none"><%= posts[i].title %> <span
+                        class="text-secondary" style="font-size: 0.7rem;" class="lead"><%= posts[i].date %></span>
+                    <span class="badge badge-primary mx-2">New</span></a><br>
+                <hr>
+                <% } %>
+                <!-- <a href="#" class="text-decoration-none">Temp<span class="badge badge-primary mx-2">New</span></a><br>
+                <hr>
+                <a href="#" class="text-decoration-none">Temp<span class="badge badge-primary mx-2">New</span></a><br>
+                <hr>
+                <a href="#" class="text-decoration-none">Temp<span class="badge badge-primary mx-2">New</span></a><br>
+                <hr> -->
+            </div>
+            <!-- <div class="p-3 mt-3 mb-5 bg-light rounded">
+                <h4 class="font-italic">About Blogster</h4>
+                <p> -->
+            <!-- Visiting <em>"Taj Mahal"</em> is my Favourite part. It's beauty is immortal. It was raining that
+                    day. During rain, it shines brilliantly. Weather wo also very chilly that day. -->
+            <!-- Your project on <em>Blogster</em> website sounds interesting and useful. With this website, people
+                    can come
+                    and login to post their blogs on various topics, allowing them to express their thoughts and
+                    opinions on different subjects. The website's search option and the ability to find blogs according
+                    to the title makes it easy for users to navigate and find the content they're interested in reading.
+                    Additionally, the ability to compose a blog and delete it gives users the flexibility to manage
+                    their content according to their preferences.
+
+                    Using Node.js, Express, MongoDB, and Mongoose for your project is a great choice as they are popular
+                    and powerful tools for building web applications. These technologies allow for scalability,
+                    performance, and flexibility, which is important for a project like Blogster. Furthermore, by using
+                    these technologies, you can ensure that the website is fast, secure, and reliable. Overall, your
+                    project on Blogster website is a great platform for people to share their ideas and engage with
+                    others on various topics.
+                </p>
+                <img class="my-3" src="img/side2.jpeg" alt="error" width="100%">
+            </div> -->
+        </div>
+    </div>
+</div>
+<%- include("partials/footer"); -%>

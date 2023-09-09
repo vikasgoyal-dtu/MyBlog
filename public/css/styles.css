@@ -1,0 +1,24 @@
+.navHeading {
+  font-weight: bold;
+  font-size: 1.5rem;
+  font-family: "Macondo", cursive;
+}
+h1 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  font-family: "Macondo", cursive;
+}
+
+p,
+a {
+  font-family: "Roboto Flex", sans-serif;
+  line-height: 1.5;
+  word-spacing: 3px;
+}
+
+h4 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  /* font-family: "Macondo", cursive; */
+  font-family: "Ubuntu", sans-serif;
+}

@@ -1,0 +1,23 @@
+<%- include("partials/header"); -%>
+
+<div class="container jumbotron jumbotron-fluid">
+    <div class="container text-center">
+        <h3>Login Page</h3>
+    </div>
+    <div class="row">
+        <div class="container col-sm-4 my-5">
+            <form class="mx-4" action="/check" method="post">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" name="name">
+                    <label>Password</label>
+                    <input class="form-control" type="password" name="password">
+                    <button class="my-3 btn btn-primary" type="submit" name="button">Login</button>
+                    <input type="hidden" name="demand" value="<%= demand %>">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%- include("partials/footer"); -%>

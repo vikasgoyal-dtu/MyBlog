@@ -1,0 +1,32 @@
+<%- include("partials/loginHeader"); -%>
+
+<div class="container jumbotron jumbotron-fluid">
+  <div class="container col-md-8 col-sm-6 col-xl-8 col-xxl-8 col-lg-8 text-center">
+    <h1>Add your blog...</h1>
+    <form action="/compose" method="post">
+      <div class="form-group">
+        <!-- <label>Title</label> -->
+        <input class="form-control" type="text" name="title" placeholder="title">
+        <select name="type" id="select1" class="form-control mt-2" aria-label=".form-select-lg example">
+          <option value="#" selected>Choose the type of blog</option>
+          <option value="World">World</option>
+          <option value="India">India</option>
+          <option value="Technology">Technology</option>
+          <option value="Design">Design</option>
+          <option value="Culture">Culture</option>
+          <option value="Business">Business</option>
+          <option value="Politics">Politics</option>
+          <option value="Opinion">Opinion</option>
+          <option value="Science">Science</option>
+          <option value="Health">Health</option>
+          <option value="Style">Style</option>
+          <option value="Travel">Travel</option>
+        </select>
+        <!-- <label>Content</label> -->
+        <textarea class="form-control mt-2" name="content" rows="5" cols="30" placeholder="content"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Publish</button>
+    </form>
+  </div>
+</div>
+<%- include("partials/footer"); -%>

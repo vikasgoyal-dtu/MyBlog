@@ -1,0 +1,452 @@
+login/sign up
+about
+contact
+add blog according to the dropbox
+read more for blogs
+archives monthly
+search specific username
+newer to older
+cards
+date
+post a blog according to user name
+unique username
+
+
+
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const ejs = require("ejs");
+const _ = require("lodash");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+var GoogleStrategy = require("passport-google-oauth20").Strategy;
+var findOrCreate = require("mongoose-findorcreate");
+
+const app = express();
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(
+  session({
+    secret: "this is our little secret.",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+mongoose.connect("mongodb://0.0.0.0:27017/blogDB", {
+  useNewUrlParser: true,
+});
+
+// let username = "";
+
+// const userSchema = {
+//   username: {
+//     type: String,
+//     required: true,
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//   },
+//   password: {
+//     type: String,
+//     required: true,
+//   },
+// };
+
+const blogSchema = new mongoose.Schema({
+  // username: {
+  //   type: String,
+  //   required: true,
+  // },
+  title: String,
+  type: String,
+  date: String,
+  content: String,
+});
+
+blogSchema.plugin(passportLocalMongoose);
+blogSchema.plugin(findOrCreate);
+
+// const User = mongoose.model("User", userSchema);
+const Blog = mongoose.model("Blog", blogSchema);
+
+passport.use(Blog.createStrategy());
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:4000/auth/google/secrets",
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      // console.log(profile);
+      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return cb(err, user);
+      });
+    }
+  )
+);
+
+// Starting content
+const homeStartingContent =
+  "Basically I am a computer science engineering student of delhi technological university. I completed my schooling from Rajkiya Pratibha Vikas Vidyalay. I love to watch movies and webseries. Cricket fascinates me a lot. I am teaching students as a home tutor from last two years. So, I am a teacher also. Best thing about me is I always remain motivated. I always tries to find the solutions to my problems which I face in everyday life. I am not very social. For example I love to be alone. I can call myself as extrovertIntrovert. You can read my blogs down below...";
+
+app.get("/", (req, res) => {
+  const findBlog = async () => {
+    const found = await Blog.find({});
+    // console.log(found);
+    res.render("home", {
+      homeStartingContent: homeStartingContent,
+      posts: found,
+    });
+  };
+  findBlog();
+});
+
+// app.get("/about", (req, res) => {
+//   res.render("about", { aboutContent: aboutContent });
+// });
+
+// app.get("/contact", (req, res) => {
+//   res.render("contact", { contactContent: contactContent });
+// });
+
+app.get("/compose", (req, res) => {
+  res.render("compose");
+});
+
+app.get("/post/:title", (req, res) => {
+  // console.log(req.params.title);
+  let title = _.capitalize(req.params.title);
+  // for (let i = 0; i < posts.length; i++) {
+  //   if (_.lowerCase(posts[i].title) === title) {
+  //     // console.log("Match Found ");
+  //     // console.log(title);
+  //     // console.log(_.lowerCase(posts[i].title));
+  //     res.render("post", {
+  //       title: posts[i].title,
+  //       content: posts[i].content,
+  //       date: "date",
+  //     });
+  //     // break;
+  //   }
+  // }
+  const findBlog = async () => {
+    const found = await Blog.findOne({ title: title });
+    if (!found) {
+      res.render("soon");
+    } else {
+      res.render("post", {
+        title: found.title,
+        date: found.date,
+        content: found.content,
+        type: found.type,
+      });
+    }
+  };
+  findBlog();
+  // res.redirect("/");
+});
+
+app.get("/World", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "World" });
+    // console.log(found);
+    if (found.length != 0) res.render("type", { title: "World", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+
+app.get("/India", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "India" });
+    // console.log(found);
+    if (found.length != 0) res.render("type", { title: "India", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Technology", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Technology" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Technology", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Design", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Design" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Design", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Culture", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Culture" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Culture", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Business", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Business" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Business", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Politics", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Politics" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Politics", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Opinion", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Opinion" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Opinion", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Science", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Science" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Science", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Health", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Health" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Health", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Style", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Style" });
+    // console.log(found);
+    if (found.length != 0) res.render("type", { title: "Style", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/All", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({});
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Blogs found", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+app.get("/Travel", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({ type: "Travel" });
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Travel", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+
+app.get("/Mine", (req, res) => {
+  const find = async () => {
+    const found = await Blog.find({});
+    // console.log(found);
+    if (found.length != 0)
+      res.render("type", { title: "Your Activity", found: found });
+    else res.render("soon");
+  };
+  find();
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", (req, res) => {
+  // console.log(req.body);
+  res.redirect("register");
+});
+
+app.post("/compose", (req, res) => {
+  // console.log(req.body);
+  // let post = {
+  //   title: req.body.title,
+  //   content: req.body.content,
+  // };
+  // posts.push(post);
+  const title = _.capitalize(req.body.title);
+  // console.log(title);
+  const type = req.body.type;
+  const content = req.body.content;
+  var objToday = new Date(),
+    weekday = new Array(
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ),
+    dayOfWeek = weekday[objToday.getDay()],
+    domEnder = (function () {
+      var a = objToday;
+      if (/1/.test(parseInt((a + "").charAt(0)))) return "th";
+      a = parseInt((a + "").charAt(1));
+      return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th";
+    })(),
+    dayOfMonth =
+      today + (objToday.getDate() < 10)
+        ? "0" + objToday.getDate() + domEnder
+        : objToday.getDate() + domEnder,
+    months = new Array(
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ),
+    curMonth = months[objToday.getMonth()],
+    curYear = objToday.getFullYear(),
+    curHour =
+      objToday.getHours() > 12
+        ? objToday.getHours() - 12
+        : objToday.getHours() < 10
+        ? "0" + objToday.getHours()
+        : objToday.getHours(),
+    curMinute =
+      objToday.getMinutes() < 10
+        ? "0" + objToday.getMinutes()
+        : objToday.getMinutes(),
+    curSeconds =
+      objToday.getSeconds() < 10
+        ? "0" + objToday.getSeconds()
+        : objToday.getSeconds(),
+    curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
+  var today = dayOfWeek + " " + dayOfMonth + " of " + curMonth + ", " + curYear;
+  // console.log(today);
+  const date = today;
+  const blog = new Blog({
+    type: type,
+    title: title,
+    date: date,
+    content: content,
+  });
+  blog.save();
+  res.redirect("/");
+});
+
+app.get("/search", (req, res) => {
+  res.render("search");
+});
+
+app.post("/search", (req, res) => {
+  const type = req.body.type;
+  const search = _.capitalize(req.body.search);
+  // console.log(type, search);
+  if (type === "Title") {
+    // console.log("Yash");
+    const findBlog = async () => {
+      const found = await Blog.findOne({ title: search });
+      if (!found) {
+        res.render("soon");
+      } else {
+        res.render("post", {
+          title: found.title,
+          date: found.date,
+          content: found.content,
+          type: found.type,
+        });
+      }
+    };
+    findBlog();
+  } else {
+    console.log("No");
+  }
+  // res.redirect("/");
+});
+
+app.post("/delete", (req, res) => {
+  console.log(req.body);
+  let toRender = req.body.title;
+  if (req.body.title == "Your Activity") {
+    toRender = "Mine";
+  }
+  const deleleItem = async () => {
+    await Blog.findOneAndRemove({
+      _id: req.body.deleteID,
+    });
+  };
+  deleleItem();
+  res.redirect("/" + toRender);
+});
+
+let port = 4000;
+if (port == null || port == "") {
+  port = 4000;
+}
+app.listen(port, function (req, res) {
+  console.log("Server started on port 4000");
+});

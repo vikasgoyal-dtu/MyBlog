@@ -1,0 +1,45 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+            <a class="p-2 text-muted" href="/World">World</a>
+            <a class="p-2 text-muted" href="/India">India</a>
+            <a class="p-2 text-muted" href="/Technology">Technology</a>
+            <a class="p-2 text-muted" href="/Design">Design</a>
+            <a class="p-2 text-muted" href="/Culture">Culture</a>
+            <a class="p-2 text-muted" href="/Business">Business</a>
+            <a class="p-2 text-muted" href="/Politics">Politics</a>
+            <a class="p-2 text-muted" href="/Opinion">Opinion</a>
+            <a class="p-2 text-muted" href="/Science">Science</a>
+            <a class="p-2 text-muted" href="/Health">Health</a>
+            <a class="p-2 text-muted" href="/Style">Style</a>
+            <a class="p-2 text-muted" href="/Travel">Travel</a>
+            <!-- <a class="p-2 text-muted" href="/All">All</a> -->
+            <a class="p-2 text-muted" href="/Find">Find</a>
+            <a class="p-2 text-muted" href="/Mine">Mine</a>
+        </nav>
+    </div>
+</div>
+
+<!-- <div class="container">
+</div> -->
+
+<div class=" container jumbotron jumbotron-fluid">
+    <form action="/search" method="post">
+        <div class="input-group container-fluid col-md-8 col-sm-6 col-xl-8 col-xxl-8 col-lg-8">
+            <input name="search" type="text" class="form-control" placeholder="Enter title of blog or username "
+                aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <select name="type" class="custom-select col-2" id="inputGroupSelect04">
+                <option selected>Select...</option>
+                <option value="username">Username</option>
+                <option value="Title">Title</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- include("partials/footer"); -%>

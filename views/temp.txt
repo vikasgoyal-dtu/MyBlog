@@ -1,0 +1,7 @@
+<form action="/delete" method="post">
+    <div class="item">
+        <input type="hidden" name="listName" value="<%= listTitle %>">
+        <input type="checkbox" name="checkbox" value="<%= newItemList[i]._id %>" onChange="this.form.submit()">
+        <p><%= newItemList[i].name %></p>
+    </div>
+</form>

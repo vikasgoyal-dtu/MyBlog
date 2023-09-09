@@ -1,0 +1,20 @@
+<%- include("partials/header"); -%>
+
+<div class="container jumbotron jumbotron-fluid">
+    <div class="container text-center">
+        <h3>You can delete your blogs here</h3>
+    </div>
+    <div class="row">
+        <div class="container col-sm-4 my-5">
+            <form class="mx-4" action="/delete" method="post">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input class="form-control" type="text" name="title">
+                    <button class="my-3 btn btn-primary" type="submit" name="button">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%- include("partials/footer"); -%>
