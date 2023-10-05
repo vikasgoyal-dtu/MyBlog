@@ -37,6 +37,7 @@ Blogster exposes the following RESTful APIs:
 Blogster implements user authentication using Passport. Users can sign up for new accounts or log in with their existing credentials. Only authenticated users are authorized to perform CRUD operations on their own blog posts.
 <hr>
 <h3>Contact</h3>
-If you have any questions or suggestions, feel free to reach out to our team at goyal.vikas289@gmail.com .
+If you have any questions or suggestions, feel free to reach out to our team at goyal.vikas289@gmail.com .<br>
 Thank you for using Blogster! We hope this platform enhances your blogging experience and facilitates your creative expressions. Happy blogging!
+
 <hr>
